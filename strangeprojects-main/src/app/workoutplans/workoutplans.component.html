@@ -1,0 +1,126 @@
+
+<div *ngIf="displayBuild" class="wrapper" >
+    <div class="create_workoutplan">
+        <div class="create_workoutplan_head">
+            <h3>Create Workoutplan</h3>
+        </div>
+        <div class="create_workoutplan_body">
+            <div class="create_workoutplan_elem">
+                <div for="new-workoutplan"><span>Name:</span></div>
+                <input id="new-workoutplan" placeholder="Workoutplan Name" #workoutplanName />
+            </div>
+            <div class="create_workoutplan_elem">
+                <div for="new-workoutplan"><span>Duration:</span></div>
+                <select [(ngModel)]="selected_duration" id="sel_workoutplan_duration">  
+                    <option *ngFor="let week of weeks" [value]="week">{{week}} <span *ngIf="week === 1">week</span><span *ngIf="week !== 1">weeks</span></option>
+                </select>
+            </div>
+            
+        </div>
+        
+        <!--repeat workoutplan_week div for selected_duration times-->
+        <div class="workoutplan_week">
+            <!--
+                select workout for each day of the week -> build workoutplan object -> when add workoutplan object can be inserted into DB's
+            -->
+            
+        </div>
+        <div class="create_workoutplan_btns">
+            <a class="add-button" (click)="createWorkoutplan(workoutplanName.value, selected_duration); workoutplanName.value=''">
+                Build Workoutplan
+            </a>
+            <a class="cancel-button" (click)="toggleBuild(); workoutplanName.value=''">
+                Cancel
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+<a class="toggle_btn" (click)="toggleBuild();">
+    Create Workoutplan
+</a>
+<!--
+DISPLAY WORKOUT PLANS
+-->
+<h2>Workout Plans</h2>
+<div class="workoutplans_container">
+    <div *ngFor="let workoutplan of workoutplans">
+        <div class="workoutplan_container">
+            <div class="workoutplan_head">
+                <a routerLink="/workoutplan_detail/{{workoutplan.id}}">
+                    <h3>{{workoutplan.name}}</h3>
+                </a>
+            </div>
+            <div class="workoutplan_info">
+
+                <div class="workoutplan_info_elem">Duration: {{workoutplan.duration}}</div>
+                <div *ngIf="workoutplan.note != ''" class="workoutplan_info_elem">Note: {{workoutplan.note}}</div>
+
+                <div class="workoutplan_btns">
+                    <a class="edit" title="edit workoutplan"
+                    routerLink="/workoutplan_detail/{{workoutplan.id}}">Edit Workout
+                    </a>
+                    <a class="activate" title="start workoutplan"
+                            (click)="activate(workoutplan)">Start Workoutplan
+                    </a>
+                </div>
+            </div>
+            
+            <!--<button class="delete" title="delete workout"
+                    (click)="delete(workoutplan)">x
+            </button>-->
+            
+            <div class="workoutplan_body">
+                
+                <div class="workoutplan_week_container" *ngFor="let week of workoutplan.weeks; let i = index" >
+
+                    <div class="workoutplan_week_head">
+                        <h3>Week {{i + 1}}</h3>
+                        <div *ngIf="week.deload"> - Deload Week</div>
+                        
+                    </div>
+                    <div class="workoutplan_week">
+                        <div class="workoutplan_day" *ngFor="let day of week.days">
+                            
+                            <div class="workoutplan_day_header">
+                                <a *ngIf="day.workout.id !== 1" routerLink="/workout_detail/{{day.workout.id}}">
+                                    Day {{day.day + 1}} - {{day.workout.name}}
+                                </a>
+                                <div *ngIf="day.workout.id === 1">
+                                    Day {{day.day + 1}} - {{day.workout.name}}
+                                </div>
+                            </div>
+                            <div *ngIf="day.workout.id !== 1" class="workoutplan_day_body">
+                                <div *ngIf="day.note != ''" class="workoutplan_day_note">
+                                    Note: {{day.note}}
+                                </div>
+                                <div class="workoutplan_day_exercises_container">
+                                    <div style="font-weight: bolder;">Exercises:</div>
+                                    <div class="workoutplan_day_exercises">
+                                        <div *ngFor="let exercise of day.workout.exercises">
+                                            
+                                            <span>{{exercise.sets}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div *ngIf="day.workout.id === 1" class="workoutplan_rest_day">
+                                <div>
+                                    <h4>Enjoy your Rest Day.</h4>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>  
+    </div>
+</div>

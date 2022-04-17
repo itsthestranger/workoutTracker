@@ -1,0 +1,152 @@
+input{
+    padding: 0.5rem;
+}
+select{
+    padding:.5rem;
+}
+li{
+    list-style-type: none;
+}
+
+a{
+    padding: .5rem;
+    margin: .5rem;
+    background-color: #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+
+a:hover{
+    background-color: #00284b;
+}
+
+.workout_container{
+    border: 1px solid #005DAE;
+    border-radius: 4px;
+    padding:.5rem;
+    margin: 0 1rem 1rem 0;
+    max-width: max-content;
+    font-size: smaller;
+}
+.workout_head{
+    text-align: center;
+    margin-bottom: .5rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.workout_head>input{
+    font-size: larger;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+.workout_head>h3{
+    font-size: larger;
+    padding-bottom: 0.5rem;
+}
+
+.workout_body>div{
+    margin-top:.5rem;
+}
+.workout_info_elem{
+    display: flex;
+    margin-top:.5rem;
+}
+.workout_info_elem>input{
+    margin-left: auto;
+}
+
+.workout_info_elem>div{
+    display: flex;
+}
+.workout_info_elem span{
+    margin: auto 0;
+}
+.workout_exercises{
+    padding:.5rem;
+    color:grey;
+}
+.workout_exercises>div{
+    margin-bottom: .25rem;
+}
+
+.workout_exercises input{
+    width: 30px;
+}
+
+.workout_btns{
+    display: flex;
+    justify-content: center;
+}
+
+.workout_add_exercises_filters_wrapper{
+    display: flex;
+    margin:.5rem 0;
+}
+.workout_add_exercises_filters_wrapper>div{
+    padding:0 .5rem;
+}
+.workout_add_exercises_filters_wrapper>a{
+    margin:auto 0 auto auto;
+}
+.workout_add_exercises_filters{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.workout_add_exercises_filter{
+    display: inline-flex;
+    padding: .25rem 0;
+}
+.workout_add_exercises_filter>div{
+    width: 90px;
+    display: flex;
+}
+.workout_add_exercises_filter>div>span{
+    margin:auto 0;
+}
+.workout_add_exercises_filter>select{
+    margin-left: auto;
+}
+
+.workout_add_exercises_search{
+    margin: .75rem 0;
+}
+.workout_add_exercises_search>input{
+    margin-left: .5rem;
+}
+
+.workout_add_exercises{
+    max-height: 250px;
+    min-width: 300px;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    border:1px solid lightgray;
+    /*border-radius: 4px;*/
+    padding:.5rem;
+    margin:.5rem 0;
+}
+.workout_add_exercises>li{
+    margin:.5rem 0;
+    display: flex;
+}
+.workout_add_exercises>li>div{
+    width: 100%;
+    display: flex;
+}
+.workout_add_exercises_checkbox{
+    margin-right: .5rem;
+}
+.workout_add_exercises_name{
+    display: flex;
+}
+.workout_add_exercises_name>span{
+    margin:auto 0;
+}
+.workout_add_exercises_sets{
+    width: 40px;
+    margin: 0 0 0 auto;
+}

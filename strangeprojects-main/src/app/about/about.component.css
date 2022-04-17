@@ -1,0 +1,67 @@
+h3{
+    margin:0;
+    padding:0;
+    padding-bottom: .5rem;
+  }
+  input{
+    padding:.5rem;
+  }
+  select{
+    padding:.5rem;
+  }
+
+  .about_container{
+    display: block;
+    width: 70%;
+    margin: 0 0 1rem 0;
+    background-color: white;
+    border: 1px solid #005DAE;
+    border-radius: 4px;
+    padding:1rem;
+    
+  }
+
+  .about_element{
+    padding: .5rem .5rem 1rem .5rem;
+  }
+
+  .about_elem_header{
+    margin-bottom:.5rem;
+  }
+
+  .about_elem_body{
+    font-size: smaller;
+  }
+  .about_elem_body span{
+    font-size: smaller;
+    color: grey;
+  }
+
+  .about_links{
+    margin-top: .5rem 0;
+  }
+
+  .applications_overview_wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
+  }
+
+  .applications_overview_elem{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .applications_overview_elem_first{
+    width: 220px;
+    padding-right: .5rem;
+    padding-bottom: .25rem;
+  }
+
+  .about_elem_body a{
+    color:grey;
+    text-decoration: none;
+  } 
+  .about_elem_body a:hover{
+    color:black;
+  } 

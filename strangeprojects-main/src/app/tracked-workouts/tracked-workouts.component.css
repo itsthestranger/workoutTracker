@@ -1,0 +1,82 @@
+ul{
+    list-style-type:none;
+}
+
+.title{
+    width: 50%;
+    text-align: center;
+    margin:0 auto;
+}
+
+.tracked-workouts{
+    display: block;
+    width: 100%;
+}
+
+.tracked-workout-body{
+    display: inline-flex;
+    width: 100%;
+}
+.tracked-workout-head{
+    display: flex;
+    justify-content: center;
+    padding:5px;
+    border-bottom: 1px solid lightgray;
+}
+
+.tracked-workout-container{
+    border:1px solid #005DAE;
+    border-radius: 4px;
+    width: 50%;
+    margin:2rem auto;
+
+}
+
+.tracked-workout-body-left{
+    width: 30%;
+    border-right: 1px solid lightgray;
+    display: flex;
+    
+}
+.tracked-workout-body-left>div{
+    margin:auto;
+}
+.tracked-workout-body-left>div>div{
+    padding:.5rem;
+}
+
+
+
+.tracked-workout-body-right{
+    width: 70%;
+    padding:.5rem;
+}
+.tracked-workout-exercise{
+    display: flex;
+}
+
+.tracked-workout-exercise>div{
+    padding: .5rem 2rem .5rem 0;
+}
+
+.tracked-workout-sets{
+    padding-bottom: .5rem;
+    color: gray;
+    margin-left: -15px;
+}
+
+@media screen and (max-width: 1100px){
+    .tracked-workout-container{
+
+        width: 100%;
+    
+    }
+}
+
+@media screen and (min-width:1101px) and (max-width: 1530px){
+    .tracked-workout-container{
+
+        width: 75%;
+    
+    }
+}

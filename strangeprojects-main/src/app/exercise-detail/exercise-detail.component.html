@@ -1,0 +1,151 @@
+<div *ngIf="exercise">
+    <div *ngIf="editing" class="exercise_container">
+        <div class="exercise_header">
+            <input id="exercise-name" [(ngModel)]="exercise.name" placeholder="name">
+        </div>
+        <div class="exercise_body">
+            <div class="exercise_body_element">
+                <label for="exercise-bodypart">Bodypart: </label>
+                <select [(ngModel)]="exercise.bodypart.id" id="sel_bodypart">
+                    <option *ngFor="let bodypart of bodyparts" [value]="bodypart.id">{{bodypart.name}}</option>
+                </select>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-equipment">Equipment: </label>
+                <select [(ngModel)]="exercise.equipment.id" id="sel_equipment">
+                    <option *ngFor="let equipment of equipments" [value]="equipment.id">{{equipment.name}}</option>
+                </select>
+            </div>
+            
+            <div class="exercise_body_element">
+                <label for="exercise-rating">Rating: </label>
+                <input id="exercise-rating" [(ngModel)]="exercise.rating" placeholder="Rating">
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-note">Note: </label>
+                <input id="exercise-note" [(ngModel)]="exercise.note" placeholder="Note">
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-rep_range">Rep Range: </label>
+                <input id="exercise-rep_range" [(ngModel)]="exercise.rep_range" placeholder="Format: range min - range max ">
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-weight_step_size">Weight Step Size: </label>
+                <input id="exercise-weight_step_size" [(ngModel)]="exercise.weight_step_size" placeholder="Weight Step Size">
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-public">Public: </label>
+                <input type="checkbox" id="exercise-public" [(ngModel)]="exercise.public" placeholder="Note">
+            </div>
+        </div>
+        <div class="exercise_body_addition">
+            <div class="exercise_body_addition_elem">
+                <label for="exercise-description">Description: </label>
+                <textarea maxlength="255" id="exercise-description" [(ngModel)]="exercise.description" placeholder="Description"></textarea>
+            </div>
+
+            <div class="exercise_body_addition_elem">
+                <label for="exercise-image">Exercise Image: </label>
+                <input type="file" id="file" (change)="handleFileInput($event)">
+                <a (click)="uploadImage()">Upload</a>
+            </div>
+        </div>
+        <div class="exercise_btns_wrapper">
+            <div class="exercise_btns">
+                <a *ngIf="exercise && !exercise.global" (click)="save()">Save</a>
+                <a  (click)="cancel()">Cancel</a>
+            </div>
+        </div>
+    </div> 
+    <div *ngIf="!editing" class="exercise_container">
+        <div class="exercise_header">
+            <h3>{{exercise.name}}</h3>
+        </div>
+        <div class="exercise_body">
+            <div class="exercise_body_element">
+                <label for="exercise-bodypart">Bodypart: </label>
+                <div>{{exercise.bodypart.name}}</div>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-equipment">Equipment: </label>
+                <div>{{exercise.equipment.name}}</div>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-rating">Rating: </label>
+                <div>{{exercise.rating}}</div>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-note">Note: </label>
+                <div>{{exercise.note}}</div>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-rep_range">Rep Range: </label>
+                <div>{{exercise.rep_range}}</div>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-weight_step_size">Weight Step Size: </label>
+                <div>{{exercise.weight_step_size}} {{exercise.tracking_unit.name}}</div>
+            </div>
+            <div class="exercise_body_element">
+                <label for="exercise-public">Public: </label>
+                <div *ngIf="exercise.public">Yes</div>
+                <div *ngIf="!exercise.public">No</div>
+            </div>
+            
+        </div>
+        <div class="exercise_btns_wrapper">
+            <div class="exercise_btns">
+                <a *ngIf="exercise && !exercise.global" (click)="edit()">Edit</a>
+                <a *ngIf="exercise && !exercise.global" (click)="duplicate()">Duplicate</a>
+                <a *ngIf="exercise && exercise.global" (click)="duplicate()">Copy to Edit</a>
+                <a (click)="goBack()">Go Back</a>
+            </div>
+        </div>
+        <div class="exercise_info">
+            <div *ngIf="exercise.description" class="exercise_description">
+                <div>{{exercise.description}}</div>
+            </div>
+            <div *ngIf="!exercise.description && !editing" class="exercise_description">
+                <div>No Exercise description yet.</div>
+            </div>
+            <div *ngIf="exercise.visual_path" class="exercise_visual">
+                <div>
+                    <img src="{{exercise.visual_path}}" alt="">
+                </div>
+            </div>
+            <div *ngIf="!exercise.visual_path && !editing" class="exercise_visual">
+                <div style="display:flex;"><span style="margin:auto;">No Image added yet.</span> </div>
+            </div>
+            
+        </div>
+        <div class="exercise_data">
+            <div class="exercise_data_switch_container">
+                <div [style.background-color]="showHistory ? '#005DAE' : 'white'" [style.color]="showHistory ? 'white' : '#333'" class="exercise_data_switch_history" (click)="flipDataSwitch(true)">History</div>
+                <div [style.background-color]="!showHistory ? '#005DAE' : 'white'" [style.color]="!showHistory ? 'white' : '#333'" class="exercise_data_switch_chart" (click)="flipDataSwitch(false)">Chart</div>
+            </div>
+            <div *ngIf="showHistory && exerciseHistorySets.length > 0" class="exercise_history">
+                <div class="exercise_history_element" *ngFor="let historyExercise of exerciseHistorySets">
+                    <div class="exercise_history_head">
+                        <div class="exercise_history_workout">{{historyExercise.exerciseWorkoutName}}</div>
+                    </div>
+                    <div class="exercise_history_sets_container" >
+                        <div style="font-weight: bolder;">Sets:</div>
+                        <div class="exercise_history_sets">
+                            <div  *ngFor="let set of historyExercise.exerciseHistorySets;let i = index">
+                                <div class="exercise_history_set">{{i+1}}. {{set.reps}} x {{set.weight}} {{exercise.tracking_unit.name}}</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="exercise_history_date">tracked on {{historyExercise.exerciseTrackerDate | date}}</div>
+                    <div *ngIf="historyExercise.exerciseWorkoutplanName" class="exercise_history_workoutplan">Workoutplan: {{historyExercise.exerciseWorkoutplanName}}</div>
+  
+                </div>
+            </div>
+            <div *ngIf="showHistory && exerciseHistorySets.length == 0" style="text-align: center;">No History yet.</div>
+            <div *ngIf="!showHistory" class="exercise_chart">
+                Chart
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+input {
+    padding: .5rem;
+    
+}
+select{
+    padding: .5rem;
+}
+
+.workoutplan_container{
+    display: block;
+    margin:auto;
+    background-color: white;
+    border: 1px solid #005DAE;
+    border-radius: 4px;
+    padding:1rem;
+}
+.workoutplan_head{
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    margin-bottom:1rem;
+    padding-bottom: .5rem;
+    
+}
+.workoutplan_head input{
+    font-size: larger;
+}
+.workoutplan_info{
+    margin-bottom: .5rem;
+}
+.workoutplan_info_elem{
+    display: flex;
+    margin:.5rem;
+}
+.workoutplan_info_elem>div{
+    display: flex;
+}
+.workoutplan_info_elem>div>span{
+    margin:auto 0;
+}
+.workoutplan_info_elem>input{
+    margin-left: .5rem;
+}
+.workoutplan_btns{
+    display: flex;
+}
+.workoutplan_btns>a{
+    padding: .5rem;
+    margin: .5rem;
+    background-color: #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+.workoutplan_btns>a:hover{
+    background-color: #00284b;
+}
+.workoutplan_body{
+    border:1px solid lightgray;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 400px;
+    padding:1rem;
+}
+.workoutplan_week_container{
+    margin-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+}
+.workoutplan_week_head{
+    display: flex;
+}
+.workoutplan_week_head div, a{
+    margin: auto 0;
+    margin-left: 1rem;
+}
+.workoutplan_week_head>a{
+    padding: .5rem;
+    background-color: #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+    height: min-content;
+}
+.workoutplan_week_head>a:hover{
+    background-color: #00284b;
+}
+.workouplan_week{
+    display: flex;  
+    flex-wrap: wrap;
+}
+.workoutplan_day{
+    border: 1px solid #005DAE;
+    border-radius: 4px;
+    padding:.5rem;
+    margin: 0 1rem 1rem 0;
+    min-width: 210px;
+}
+.workoutplan_day_header{
+    text-align: center;
+    padding-bottom: .25rem;
+    margin-bottom: .5rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.workoutplan_day_body>div{
+    margin-top:.5rem;
+}
+
+.workoutplan_day_note>div{
+    padding-bottom: .25rem;
+}
+.workoutplan_day_workout>div{
+    padding-bottom: .25rem;
+
+}

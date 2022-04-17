@@ -1,0 +1,48 @@
+
+<div class="tracked-workouts">
+    <div class="title"><h2>Tracked Workouts</h2></div>
+    <ul *ngIf="tracked_workouts" >
+        <li *ngFor="let workout of tracked_workouts"> 
+            <div class="tracked-workout-container">
+                <!--Head-->
+                <div class="tracked-workout-head"><span>{{workout.workout.name}}</span></div>
+                <!--Body-->
+                <div class="tracked-workout-body">
+                    <!--Left-->
+                    <div class="tracked-workout-body-left">
+                        <div>
+                            <div><label>Start: </label><span>{{workout.start}}</span></div>
+                            <div><label>End: </label><span>{{workout.end}}</span></div>
+                            <div><label>Duration: </label><span>{{calcDuration(workout.start, workout.end)}}</span></div>
+                        </div>
+                        
+                    </div>
+                    <!--Right-->
+                    <div class="tracked-workout-body-right"> 
+                        <ul>
+                            <li *ngFor="let exercise of getTrackerExercises(workout.id)">
+                                <div class="tracked-workout-exercise">
+                                    <div>{{exercise.exercise.name}}</div>
+                                    <div>{{exercise.exercise.equipment.name}}</div>
+                                    <div>{{exercise.exercise.bodypart.name}}</div>
+                                </div>
+                                <ul class="tracked-workout-sets">
+                                    <li *ngFor="let set of exercise.exercise_sets; let i = index">
+                                        <div class="tracked-workout-set">- Set {{i + 1}}: {{set.reps}} x {{set.weight}} {{exercise.exercise.tracking_unit.name}}</div>
+                                    
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--<a routerLink="/detail/{{workout.id}}">
+                <span class="exercise_elem">{{exercise.id}}</span><span>{{exercise.name}} {{exercise.bodypart.name}} {{exercise.equipment.name}} {{exercise.rating}} {{exercise.note}}</span>
+            </a>-->
+            <!--<button class="delete" title="delete exercise"
+                (click)="delete(exercise)">x</button>-->
+        </li>
+    </ul>
+</div>

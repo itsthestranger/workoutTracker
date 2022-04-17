@@ -1,0 +1,76 @@
+<div class="workout_tracker_body" *ngIf="tracker">
+    <div class="workout_tracker_head">
+        <div>
+            <h3>{{tracker.workout.name}}</h3>
+        </div>
+        <div class="workout_tracker_info">
+            <div>Start Time: {{tracker.start}}</div>
+            <div>Duration: {{duration_tracker}}</div>
+        </div>
+    </div>
+    
+    <div class="workout_tracker_exercise_container">
+        <div style="font-weight: bolder;">Exercises:</div>
+
+        <div class="workout_tracker_exercise" *ngFor="let exercise of exercises">
+            <div class="workout_tracker_exercise_info">
+                <div>{{exercise.exercise.name}} - {{exercise.exercise.equipment.name}}</div>
+
+            </div>
+            <div class="workout_tracker_sets">
+                <div class="workout_tracker_set" *ngFor="let set of exercise.exercise_sets; let i = index">
+                    <span>
+                        - Set {{i + 1}}: 
+                    </span>
+                    <input id="" [(ngModel)]="set.reps" placeholder="Reps">
+                    <span>
+                            x 
+                    </span>
+                    <input id="" [(ngModel)]="set.weight" placeholder="Weight">
+                    <span> {{exercise.exercise.tracking_unit.name}} - Feeling: </span>
+                    <input id="" [(ngModel)]="set.feeling" placeholder="Feeling">
+
+                
+                </div>
+            </div>
+        </div>
+
+        <!--<ul>
+            <li *ngFor="let tracker_set of tracker.tracker_sets">
+                <span>Exercise: {{tracker_set.exercise_id}} {{getExercise(tracker_set.exercise_id).exercise.name}}</span> 
+                <span>Equipment: {{getExercise(tracker_set.exercise_id).exercise.equipment.name}}</span>
+                <label>Reps: </label><input id="" [(ngModel)]="tracker_set.reps" placeholder="reps">
+                <label>Weight: </label><input id="" [(ngModel)]="tracker_set.weight" placeholder="weight">
+                <label>Feeling: </label><input id="" [(ngModel)]="tracker_set.feeling" placeholder="feeling">
+
+            </li>
+        </ul>-->
+    </div>
+
+    <div class="workout_tracker_btns">
+        <a (click)="stopTracker()">Finish</a>
+    </div>
+</div>
+<!--ability to add exercises during workout-->
+<!--
+<div *ngIf="add_exercises">
+    <ul>
+        <li *ngFor="let exercise of exercises">
+            <input type="checkbox" [(ngModel)]="exercise.checked" >{{exercise.workoutExercise.exercise.name}}
+            <input type="text" id="new-workout" placeholder="sets" [(ngModel)]="exercise.workoutExercise.sets">
+        </li>
+    </ul>
+</div>
+-->
+<!--<button *ngIf="!paused" (click)="toggleTimer()">Pause workout</button>
+<button *ngIf="paused" (click)="toggleTimer()">Continue workout</button>-->
+
+
+<!--
+<button *ngIf="!add_exercises" (click)="display_exercises()">Display exercises to add</button>
+<button *ngIf="add_exercises" (click)="display_exercises()">Hide exercises</button>
+<button *ngIf="workout && !workout.global" (click)="save()">save</button>
+<button *ngIf="workout && !workout.global" (click)="duplicate()">duplicate</button>
+<button *ngIf="workout && workout.global" (click)="duplicate()">copy to edit</button>
+<button (click)="goBack()">go back</button>
+-->

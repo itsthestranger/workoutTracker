@@ -1,0 +1,79 @@
+.user_profile_elem>input{
+    padding:.5rem;
+}
+.upload_file>input{
+    padding: 0;
+}
+a{
+    padding: .5rem;
+    margin: .5rem 1rem .5rem 0;
+    background-color: #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+a:hover{
+    background-color: #00284b;
+}
+input[type='file']::file-selector-button{
+    padding: .5rem;
+    margin: .5rem 1rem .5rem 0;
+    background-color: #005DAE;
+    color: white;
+    border:1px solid #005DAE;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+input[type='file']::file-selector-button:hover{
+    background-color: #00284b;
+}
+.user_profile{
+    display: block;
+    background-color: white;
+    border: 1px solid #005DAE;
+    border-radius: 4px;
+    padding:1rem;
+}
+
+.user_profile_head{
+    display: flex;
+}
+.user_profile_head img{
+    width: 100px;
+    height: 100px;
+}
+.user_profile_head_username{
+    width: 100%;
+    display: flex;
+    font-size: larger;
+}
+.user_profile_head_username>div{
+    margin: auto 0;
+    padding: 0 0 .25rem .5rem;
+}
+.user_profile_body{
+    z-index: 100;
+    border-top:1px solid lightgray;
+    margin-top:-25px;
+    background-color: white;
+    position: relative;
+    padding:1rem;
+}
+.user_profile_elem{
+    margin-bottom:.5rem;
+    display: flex;
+}
+.user_profile_elem>div{
+    width: 100px;
+    display: flex;
+}
+.user_profile_elem span{
+    margin: auto 0;
+}
+.user_profile_btns{
+    display: flex;
+}

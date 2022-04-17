@@ -1,0 +1,61 @@
+a{
+    padding: .5rem;
+    margin:.5rem;
+    background-color: #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+a:hover{
+    background-color: #00284b;
+}
+input{
+    padding:.5rem;
+}
+
+button{
+    padding: .5rem;
+    margin:.5rem;
+    background-color: #005DAE;
+    border:1px solid #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+button:hover{
+    background-color: #00284b;
+}
+.login_body{
+    display: flex;
+
+}
+.login_elem{
+    margin-bottom: .5rem;
+    display: flex;
+}
+.login_elem>label{
+    padding-left: .5rem;
+    width: 100px;
+    display: flex;
+}
+.login_elem label>span{
+    margin:auto 0;
+}
+
+.invalid-feedback{
+    display: flex;
+    flex-direction: column;
+    padding:.5rem;
+}
+.invalid-feedback>small{
+    margin:.5rem 0;
+    color:lightcoral;
+}
+
+.login_btns{
+    display: flex;
+}

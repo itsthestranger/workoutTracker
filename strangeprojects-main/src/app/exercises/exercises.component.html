@@ -1,0 +1,144 @@
+
+<div *ngIf="displayCreate" class="wrapper" >
+    <div  class="pre-exercises create-exercise">
+        <div class="exercise_header">
+            <h3>Create New Exercise</h3>
+        </div>
+        <div class="exercise_body">
+            <div class="exercise_body_element">
+                <div for="new-exercise"><span>Exercise name:</span></div>
+                <input id="new-exercise" placeholder="Name" #exerciseName />
+            </div>
+            <div class="exercise_body_element">
+                <div for="new-exercise"><span>Bodypart:</span></div>
+                <select [(ngModel)]="selected_bodypart" id="sel_bodypart">
+                    <option *ngFor="let bodypart of bodyparts" [value]="bodypart.id">{{bodypart.name}}</option>
+                </select>
+            </div>
+            <div class="exercise_body_element">
+                <div for="new-exercise"><span>Equipment:</span></div>
+                <select [(ngModel)]="selected_equipment" id="sel_equipment">
+                    <option *ngFor="let equipment of equipments" [value]="equipment.id">{{equipment.name}}</option>
+                </select>
+            </div>
+            <div class="exercise_body_element">
+                <div for="new-exercise"><span>Exercise Note:</span></div>
+                <input id="new-exercise" placeholder="Note" #exerciseNote />
+            </div>
+        </div>
+        <div class="exercise_btns">
+            <a class="add-button" (click)="add(exerciseName.value, this.selected_bodypart, this.selected_equipment, exerciseNote.value); exerciseName.value=''">
+                Add Exercise
+            </a>
+            <a class="close-button" (click)="toggleCreate();">
+                Close
+            </a>
+        </div>
+        
+    </div>
+</div>
+<div *ngIf="displayFilter" class="wrapper" >
+    <div  class="pre-exercises filter-exercises">
+        <div class="exercise_header">
+            <h3 >Filter Exercises</h3>
+        </div>
+        <div class="exercise_body">
+            <div class="exercise_body_element">
+                <div for="filter-exercise"><span>Bodypart:</span></div>
+                <select [(ngModel)]="selected_bodypart_filter" id="sel_bodypart">
+                    <option *ngFor="let bodypart of bodyparts_filter" [value]="bodypart.id">{{bodypart.name}}</option>
+                </select>
+            </div>
+            <div class="exercise_body_element">
+                <div for="filter-exercise"><span>Equipment:</span></div>
+                <select [(ngModel)]="selected_equipment_filter" id="sel_equipment">
+                    <option *ngFor="let equipment of equipments_filter" [value]="equipment.id">{{equipment.name}}</option>
+                </select>
+            </div>
+            <!--<div class="exercise_body_element">
+                <div for="filter-exercise"><span>Rating:</span></div>
+                <select [(ngModel)]="selected_rating_filter" id="sel_equipment">
+                    <option  [value]="1">Ascending</option>
+                    <option  [value]="2">Descending</option>
+                    <option  [value]="-1">No Filter</option>
+                </select>
+            </div>-->
+        </div>
+        <div class="exercise_btns">
+            <a class="filter-button" (click)="filterExercises();">
+                Filter
+            </a>
+            <a class="close-button" (click)="toggleFilter();">
+                Close
+            </a>
+        </div>    
+    </div>
+</div>
+
+<a class="toggle-btn" (click)="toggleCreate();">
+    Create Exercise
+</a>
+<a class="toggle-btn" (click)="toggleFilter();">
+    Filter Exercise
+</a>
+<h2>Exercises</h2>
+<div id="search-component">
+    <div class="exercise_search">
+        <a *ngIf="searchActive" (click)="activateSearch(false)">back</a>
+        <a *ngIf="!searchActive" (click)="activateSearch(true)">search</a>
+        <input [style.visibility]="searchActive ? 'visible' : 'hidden'" id="search_exercise" placeholder="Search Exercise ..." #exerciseSearch (input)="search(exerciseSearch.value)" />
+    </div>
+  
+    <div *ngIf="searchActive" class="exercises">
+      <div class="exercise_container" *ngFor="let exercise of search_exercises$ | async" >
+        <div class="exercise_image">
+          <div>
+              <!--SHOULD BE IMG-->
+          </div>
+          <!--<img src="" alt="">-->
+        </div>
+        <a routerLink="/exercise_detail/{{exercise.id}}">
+            <div class="exercise_info_container">
+                <div class="exercise_top">
+                    <div class="exercise_name">
+                        {{exercise.name}}
+                    </div>
+                    <!--<a *ngIf="!exercise.global" class="delete-button" title="delete exercise"
+                (click)="delete(exercise)"><span>X</span></a>-->
+                </div>
+                <div class="exercise_bottom">
+                    {{exercise.equipment.name}} - {{exercise.bodypart.name}}
+                </div>
+            </div>
+        </a>
+      </div>
+    </div>
+</div>
+<div *ngIf="exercises && !searchActive" class="exercises">
+    <div class="exercise_container" *ngFor="let exercise of filtered_exercises"> 
+        <div class="exercise_image">
+            <div>
+                <!--SHOULD BE IMG-->
+            </div>
+            <!--<img src="" alt="">-->
+        </div>
+        <a routerLink="/exercise_detail/{{exercise.id}}">
+            <div class="exercise_info_container">
+                <div class="exercise_top">
+                    <div class="exercise_name">
+                        {{exercise.name}}
+                    </div>
+                    <!--<a *ngIf="!exercise.global" class="delete-button" title="delete exercise"
+                (click)="delete(exercise)"><span>X</span></a>-->
+                </div>
+                <div class="exercise_bottom">
+                    {{exercise.equipment.name}} - {{exercise.bodypart.name}}
+                </div>
+            </div>
+        </a>
+        
+    </div>
+</div>
+
+
+

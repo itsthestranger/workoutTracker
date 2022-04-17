@@ -1,0 +1,64 @@
+<h2>Register</h2>
+
+<div class="register_body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="register_elem">
+            <label for="username"><span>Username</span></label>
+            <input type="text" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        </div>
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <small *ngIf="f.username.errors.required">Username is required</small>
+            <small *ngIf="f.username.errors.minlength">Username has to be at least 3 characters long</small>
+            <small *ngIf="f.username.errors.maxlength">Username must not be longer than 40 characters</small>
+            <small *ngIf="f.username.errors.pattern">Username must only include uppercase/lowercase letters, numbers and underscores</small>
+            <small *ngIf="f.username.errors.checkUsernameAvailabilityValidator">Username already taken</small>
+        </div>
+        
+        <div class="register_elem">
+            <label for="email"><span>E-Mail</span></label>
+            <input type="email" placeholder="E-Mail" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        </div>
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <small *ngIf="f.email.errors.required">E-Mail is required</small>
+            <small *ngIf="f.email.errors.email">Entered E-Mail is wrong</small>
+            <small *ngIf="f.email.errors.checkEmailAvailabilityValidator">Email already in use</small>
+        </div>
+        <!--<div class="register_elem">
+            <label for="email"><span>E-Mail</span></label>
+            <input type="email" placeholder="E-Mail" formControlName="email" class="form-control" [class.valid]="f.email.valid && (f.email.dirty || f.email.touched)" [class.invalid]="f.email.invalid && (f.email.dirty || f.email.touched)"/>
+        </div>
+        <div *ngIf=" f.email.invalid && f.email.errors && (f.email.dirty || f.email.touched)" class="invalid-feedback">
+            <small *ngIf="f.email.hasError('required')">E-Mail is required</small>
+            <small *ngIf="f.email.hasError('email')">Entered E-Mail is wrong</small>
+            <small *ngIf="f.email.errors.checkEmailAvailabilityValidator">Email already in use</small>
+        </div>-->
+
+        <div class="register_elem">
+            <label for="password"><span>Password</span></label>
+            <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        </div>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <small *ngIf="f.password.errors.required">Password is required</small>
+            <small *ngIf="f.password.errors.minlength">Password has to be at least 6 characters long</small>
+            <small *ngIf="f.password.errors.maxlength">Password must not be longer than 60 characters</small>
+            <small *ngIf="f.password.errors.pattern">Password has to include at least one uppercase letter and one number</small>
+        </div>
+
+        <div class="register_elem">
+            <label for="password_confirm"><span>Confirm Password</span></label>
+            <input type="password" placeholder="Repeat Password" formControlName="password_confirm" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password_confirm.errors }" />  
+        </div>
+        <div *ngIf="submitted && f.password_confirm.errors" class="invalid-feedback">
+            <small *ngIf="f.password_confirm.errors.required">Confirmation of Password is required</small>
+            <small *ngIf="f.password_confirm.errors.inputMatchValidator">Passwords must match</small>
+        </div>
+
+        <div class="register_btns">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Register
+            </button>
+            <a routerLink="/login" class="btn btn-link">Login</a>
+        </div>
+    </form>
+</div>

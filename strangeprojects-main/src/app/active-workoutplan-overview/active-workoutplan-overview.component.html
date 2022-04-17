@@ -1,0 +1,175 @@
+<div *ngIf="display_tracker && tracker_display" class="wrapper" >
+    <div  class="workout_tracker_container">
+        <div class="workout_tracker_head">
+            <div class="workout_tracker_header"><h3>{{tracker_display.workout.name}} - Tracker</h3></div>
+            <div class="workoutplan_day_tracker_info">
+                <div class="workoutplan_day_tracker_info_elem">
+                    <span >Start Time:</span>
+                    <div>{{tracker_display.start}}</div>
+                </div>
+                <div class="workoutplan_day_tracker_info_elem">
+                    <span >End Time:</span>
+                    <div>{{tracker_display.end}}</div>
+                </div>
+                <div class="workoutplan_day_tracker_info_elem">
+                    <span >Duration:</span>
+                    <div>{{calcDuration(tracker_display.start,tracker_display.end)}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="workout_tracker_exercises">
+            <div class="workout_tracker_exercise" *ngFor="let exercise of getTrackerExercises(tracker_display)">
+                <span>{{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                <div class="workout_tracker_exercise_sets" *ngFor="let set of exercise.exercise_sets; let i = index">
+                    <span>Set {{i + 1}}: {{set.reps}} x {{set.weight}} {{exercise.exercise.tracking_unit.name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="workoutplan_day_btns">
+            <a class="close-button" (click)="showTracker(tracker_display);">
+                Close
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+<div *ngIf="workoutplan_tracker">
+    <!--<div>start day = {{getStart()!.getDate()}}</div>
+    <div>current day = {{current_day}}</div>
+    <div *ngFor="let week of workoutplan_tracker.workoutplan.weeks; let i = index" style="display: flex;">
+        <div *ngFor="let day of week.days; let j = index" >
+            <div>day: {{j}}, week: {{i}}</div>
+        </div>
+    </div>-->
+    
+    <!--<div class="workoutplan-container" id="workoutplan-container" #elemt (mousedown)="startDragging($event, false, elemt)" (mouseup)="stopDragging($event, false)"
+    (mouseleave)="stopDragging($event, false)" (mousemove)="moveEvent($event, elemt)">-->
+    <div class="workoutplan_container" id="workoutplan_container" >
+        <div class="workoutplan_day_container" *ngFor="let workoutplan_day of workoutplan_display; let i = index" [style.background-color]="getBackgroundColor(i)">
+            <div class="workoutplan_day" *ngIf="!workoutplan_day.tracker">
+                <div class="workoutplan_day_header">
+                    <a *ngIf="asWorkout(workoutplan_day.workout).id !== 1" routerLink="/workout_detail/{{asWorkout(workoutplan_day.workout).id}}">
+                        Day {{i + 1}} - {{asWorkout(workoutplan_day.workout).name}}
+                    </a>
+                    <div *ngIf="asWorkout(workoutplan_day.workout).id === 1">
+                        Day {{i + 1}} - {{asWorkout(workoutplan_day.workout).name}}
+                    </div>
+                </div>
+                <div  *ngIf="asWorkout(workoutplan_day.workout).id !== 1" class="workoutplan_day_body">
+                    <div class="workoutplan_day_exercises_container">
+                        <div style="font-weight: bolder;">Exercises:</div>
+                        <div class="workoutplan_day_exercises">
+                            <div *ngFor="let exercise of asWorkout(workoutplan_day.workout).exercises">
+                                
+                                <span>{{exercise.sets}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div *ngIf="asWorkout(workoutplan_day.workout).id === 1" class="workoutplan_day_body" style="justify-content: center;">
+                    <div class="workoutplan_day_exercises_container" >
+                        <h4>Enjoy your Rest Day.</h4>
+                    </div>
+                </div>
+                <div class="workoutplan_day_btns">
+                    <a *ngIf="asWorkout(workoutplan_day.workout).id !== 1 && validDay(i) && isTodaysWorkout(i)" (click)="trackWorkout(asWorkout(workoutplan_day.workout).id, workoutplan_tracker.workoutplan.id, workoutplan_day.deload)" >
+                        Track Workout
+                    </a>
+                </div>
+            </div>
+
+            <div class="workoutplan_day" *ngIf="workoutplan_day.tracker">
+                <div class="workoutplan_day_header">
+                    <a *ngIf="asWorkoutTracker(workoutplan_day.workout).workout.id !== 1" routerLink="/workout_detail/{{asWorkoutTracker(workoutplan_day.workout).workout.id}}">
+                        Day {{i + 1}} - {{asWorkoutTracker(workoutplan_day.workout).workout.name}}
+                    </a>
+                    <div *ngIf="asWorkoutTracker(workoutplan_day.workout).workout.id === 1">
+                        Day {{i + 1}} - {{asWorkoutTracker(workoutplan_day.workout).workout.name}}
+                    </div>
+                </div>
+                <div  *ngIf="asWorkout(workoutplan_day.workout).id !== 1" class="workoutplan_day_body">
+                    <!---->
+                    <div class="workoutplan_day_exercises_container">
+                        <div style="font-weight: bolder;">Exercises:</div>
+                        <div class="workoutplan_day_exercises"> 
+                            <div *ngFor="let exercise of getTrackerExercises(asWorkoutTracker(workoutplan_day.workout))">
+                                <span>{{exercise.exercise_sets.length}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="workoutplan_day_btns">
+                    <a (click)="showTracker(asWorkoutTracker(workoutplan_day.workout))">
+                        Show Tracker
+                    </a>
+                </div>
+
+            </div>
+            
+            
+            <!--<a #element *ngIf="workoutplan_day.tracker" routerLink="/tracked_workouts" [style.background-color]="getBackgroundColor(i)">
+                <h3>{{getDay(i).toDateString()}}</h3>
+                <div (mouseover)="show(i, element)" (mouseout)="hide(i, element)">
+                    <div>
+                        <h3>Tracker for Workout: {{asWorkoutTracker(workoutplan_day.workout).workout.name}} on Day {{i + 1}}</h3>
+                        
+                    </div>
+                    
+                    <div  *ngIf="workoutplan_day.hover">
+                        <div>Start Time: {{asWorkoutTracker(workoutplan_day.workout).start}}</div>
+                        <div>End Time: {{asWorkoutTracker(workoutplan_day.workout).end}}</div>
+                        <div *ngFor="let set of asWorkoutTracker(workoutplan_day.workout).tracker_sets;" style="display: flex;">
+                            <div>Exercise Id: {{set.exercise_id}}</div>
+                            <div>Reps: {{set.reps}}</div>
+                            <div>Weight: {{set.weight}}</div>
+                            <div>Feeling: {{set.feeling}}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>-->
+            <!--<a #element *ngIf="!workoutplan_day.tracker && workoutplan_day.workout.id !== 1"  routerLink="/workout_detail/{{asWorkout(workoutplan_day.workout).id}}" [style.background-color]="getBackgroundColor(i)">
+                <div (mouseover)="show(i, element)" (mouseout)="hide(i, element)" >
+                    <h3>{{getDay(i).toDateString()}}</h3>
+                    <div>
+                        <h3>Workout on Day {{i + 1}} is {{asWorkout(workoutplan_day.workout).name}}</h3>
+                        
+                    </div>
+                    <a *ngIf="validDay(i) && isTodaysWorkout(i)" routerLink="/workout_tracker/{{asWorkout(workoutplan_day.workout).id}}/{{workoutplan_tracker.workoutplan.id}}">
+                            <button>track workout</button>
+                        </a>
+                    
+                </div>
+            </a>-->
+            <!--<div *ngIf="!workoutplan_day.tracker && workoutplan_day.workout.id === 1" [style.background-color]="getBackgroundColor(i)">
+                <h3>{{getDay(i).toDateString()}}</h3>
+                <div>
+                    <h3>Workout on Day {{i + 1}} is {{asWorkout(workoutplan_day.workout).name}}</h3>
+                    
+                </div>-->
+                <!--<div *ngIf="workoutplan_day.workout.id !== 1">
+                    <div>Exercise Order: {{asWorkout(workoutplan_day.workout).exercise_order}}</div>
+                    <a *ngIf="validDay(i) && isTodaysWorkout(i)" routerLink="/workout_tracker/{{asWorkout(workoutplan_day.workout).id}}/{{workoutplan_tracker.workoutplan.id}}">
+                        <button>track workout</button>
+                    </a>
+                    <div>Rating: {{asWorkout(workoutplan_day.workout).rating}}</div>
+                    <h5>Exercises:</h5>
+                    <div *ngFor="let exercise of asWorkout(workoutplan_day.workout).exercises" style="display: flex;">
+                        <div>Name: {{exercise.exercise.name}}</div>
+                        <div>Bodypart: {{exercise.exercise.bodypart.name}}</div>
+                        <div>Equipment: {{exercise.exercise.equipment.name}}</div>
+                        <div>Sets: {{exercise.sets}}</div>
+                    </div>
+                </div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+

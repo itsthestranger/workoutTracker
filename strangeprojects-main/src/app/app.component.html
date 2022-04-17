@@ -1,0 +1,25 @@
+<header>
+    <div style="width: 25%;">
+        <a routerLink="/dashboard"><h1>{{title}}</h1></a>
+    </div>
+    <div style="width: 50%;display: flex; justify-content: center;">
+        <nav>
+            
+            <a *ngIf="this.appService.getLoggedIn()" routerLink="/exercises">Exercises</a>
+            <a *ngIf="this.appService.getLoggedIn()" routerLink="/workouts">Workouts</a>
+            <a *ngIf="this.appService.getLoggedIn()" routerLink="/tracked_workouts">Tracked Workouts</a>
+            <a *ngIf="this.appService.getLoggedIn()" routerLink="/workoutplans">Workoutplans</a>
+            <a *ngIf="this.appService.getLoggedIn()" routerLink="/user_profile/0">Profile</a>
+            <a routerLink="/about">About</a>
+        </nav>
+    </div>
+    <div style="width: 25%;display: flex; justify-content: right;">    
+        <nav>
+            
+            <a *ngIf="!this.appService.getLoggedIn()" routerLink="/login">Login</a>
+            <a *ngIf="this.appService.getLoggedIn()" (click)="logout()">Logout</a>
+            <!--<a *ngIf="!this.appService.getLoggedIn()" routerLink="/register">Register</a>-->
+        </nav>
+    </div>
+</header>
+<router-outlet></router-outlet>

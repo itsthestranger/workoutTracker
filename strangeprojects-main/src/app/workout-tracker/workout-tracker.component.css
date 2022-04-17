@@ -1,0 +1,72 @@
+ul{
+    margin:0;
+    padding:0;
+}
+li{
+    list-style-type: none;
+    
+}
+input{
+    padding:.5rem;
+    width: 40px;
+    color: grey;
+    border: 1px solid grey;
+}
+
+a{
+    padding: .5rem;
+    margin:.5rem;
+    background-color: #005DAE;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: small;
+}
+a:hover{
+    background-color: #00284b;
+}
+.workout_tracker_body{
+    width: max-content;
+    border:1px solid #005DAE;
+    border-radius: 4px;
+    padding:1rem;
+}
+.workout_tracker_head h3{
+    margin:0 0 .5rem 0;
+    padding:0 0 .5rem 0;
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+
+}
+.workout_tracker_info{
+    margin:0 0 .5rem 0;
+    padding:0 0 .5rem 0;
+    border-bottom: 1px solid lightgray;
+}
+.workout_tracker_info>div{
+    padding:0 0 .5rem 0;
+}
+.workout_tracker_exercise{
+    display: flex;
+    flex-direction: column;
+}
+.workout_tracker_exercise_info{
+    display: flex;
+    margin:.5rem 0;
+}
+.workout_tracker_sets{
+    display: flex;
+    flex-direction: column;
+    color: grey;
+    padding: 0 1rem;
+    border-bottom: 1px solid lightgray;
+}
+.workout_tracker_set{
+    
+    margin-bottom: .5rem;
+}
+.workout_tracker_btns{
+    display: flex;
+    justify-content: center;
+}

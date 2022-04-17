@@ -1,0 +1,142 @@
+<div *ngIf="!workout">
+    Workout not found.
+</div>
+<div *ngIf="workout">
+    <div class="workout_container">
+        <div class="workout_head">
+            <h3 *ngIf="workout.global || !edit" >{{workout.name}}</h3>
+            <input *ngIf="!workout.global && edit" id="workout-name" [(ngModel)]="workout.name" placeholder="Workout Name">
+        </div>
+        <div class="workout_body">
+            <div class="workout_info">
+                <div *ngIf="!workout.global" class="workout_info_elem">
+                    <div><span>Exercise Order:</span></div>
+                    <input *ngIf="!workout.global && edit" id="workout-exercise-order" [(ngModel)]="workout.exercise_order" placeholder="Exercise Order (id, id, ...)">
+                    <div *ngIf="workout.global || !edit" >{{workout.exercise_order}}</div>
+                </div>
+                <div class="workout_info_elem">
+                    <div><span>Rating:</span></div>
+                    <input *ngIf="!workout.global && edit" id="workout_rating" [(ngModel)]="workout.rating" placeholder="Workout Rating">
+                    <div *ngIf="workout.global || !edit" >{{workout.rating}}</div>
+                </div>
+                <div class="workout_info_elem">
+                    <div><span>Public:</span></div>
+                    <input *ngIf="!workout.global && edit" id="workout_public" type="checkbox" [(ngModel)]="workout.public" placeholder="Public">
+                    <div *ngIf="(workout.global || !edit)&& workout.public">Yes</div>
+                    <div *ngIf="(workout.global || !edit)&& !workout.public">No</div>
+                </div>
+            </div>
+            <div class="workout_btns">
+                <a *ngIf="!workout.global && edit" (click)="save()">Save</a>
+                <a *ngIf="!workout.global && edit" (click)="duplicate()">Duplicate</a>
+                <a *ngIf="workout.global" (click)="duplicate()">Copy to Edit</a>
+                <a *ngIf="!workout.global && !edit" (click)="toggleEdit()">Edit</a>
+                <a *ngIf="!workout.global && edit" (click)="toggleEdit()">Back</a>
+                <a *ngIf="!edit" (click)="goBack()">Go Back</a>
+            </div>
+            <div class="workout_exercises_container">
+                <div style="font-weight: bolder;">Exercises:</div>
+                <div class="workout_exercises">
+                    <div *ngFor="let exercise of workout.exercises">
+                                            
+                        <div class="workout_exercise" *ngIf="workout.global || !edit">{{exercise.sets}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </div>
+                        <div class="workout_exercise" *ngIf="!workout.global && edit">
+                            <input id="exercise_sets" [(ngModel)]="exercise.sets" placeholder="Sets">
+                            <span> x {{exercise.exercise.name}} (id: {{exercise.exercise.id}}) - {{exercise.exercise.equipment.name}} </span>
+                            <a class="delete_btn" *ngIf="!workout.global && edit" class="delete" title="delete exercise" (click)="delete(exercise)">X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="workout_btns">
+                <a *ngIf="!add_exercises && !workout.global && edit" (click)="displayExercises()">Display Exercises to Add</a>
+                <a *ngIf="add_exercises && !workout.global && edit" (click)="addExercises()">Add Exercises</a>
+                <a *ngIf="add_exercises && !workout.global && edit" (click)="displayExercises()">Hide Exercises</a>
+            </div>
+            <div *ngIf="add_exercises && !workout.global" class="workout_add_exercises_filters_wrapper">
+                <div class="workout_add_exercises_filters">
+                    <div class="workout_add_exercises_filter">
+                        <div for="bodypart"><span>Bodypart:</span></div>
+                        <select [(ngModel)]="selected_bodypart_filter" (change)="filterBodypartNEquipment()" id="sel_bodypart">
+                            <option *ngFor="let bodypart of bodyparts_filter" [value]="bodypart.id">{{bodypart.name}}</option>
+                        </select>
+                        
+                    </div>
+                    <div class="workout_add_exercises_filter">
+                        <div for="equipment"><span>Equipment:</span></div>
+                        <select [(ngModel)]="selected_equipment_filter" (change)="filterBodypartNEquipment()" id="sel_equipment">
+                            <option *ngFor="let equipment of equipments_filter" [value]="equipment.id">{{equipment.name}}</option>
+                        </select>
+                        
+                    </div>
+                </div>
+                <!--<a *ngIf="filterActive" (click)="filterBodypartNEquipment(true)">reset Filter</a>
+                <a *ngIf="!filterActive" (click)="filterBodypartNEquipment(false)">Filter</a>-->
+            </div>
+            <div *ngIf="add_exercises && !workout.global && edit" class="workout_add_exercises_search">
+                <a *ngIf="searchActive" (click)="activateSearch(false)">back</a>
+                <a *ngIf="!searchActive" (click)="activateSearch(true)">search</a>
+                <input [style.visibility]="searchActive ? 'visible' : 'hidden'" id="search_exercise" placeholder="Search Exercise ..." #exerciseSearch (input)="search(exerciseSearch.value)" />
+            </div>
+            <ul class="workout_add_exercises" *ngIf="add_exercises && !searchActive && edit">
+                <li *ngFor="let exercise of exercises">
+                    <div *ngIf="exercise.display">
+                        <input class="workout_add_exercises_checkbox" type="checkbox" [(ngModel)]="exercise.checked" >
+                        <div class="workout_add_exercises_name"><span>{{exercise.workoutExercise.exercise.name}}</span></div>
+                        <input class="workout_add_exercises_sets" type="text" id="new-workout" placeholder="Sets" [(ngModel)]="exercise.workoutExercise.sets">
+                    </div>
+                </li>
+            </ul>
+            <ul class="workout_add_exercises" *ngIf="add_exercises && searchActive && edit">
+                <li *ngFor="let exercise of search_exercises$ | async">
+                    <div>
+                        <input class="workout_add_exercises_checkbox" type="checkbox" [(ngModel)]="getExercise(exercise.id).checked" >
+                        <div class="workout_add_exercises_name"><span>{{getExercise(exercise.id).workoutExercise.exercise.name}}</span></div>
+                        <input class="workout_add_exercises_sets" type="text" id="new-workout" placeholder="Sets" [(ngModel)]="getExercise(exercise.id).workoutExercise.sets">
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--<div *ngIf="!workout.global" class="workout_container">
+
+    </div>
+    <h3>{{workout.name | uppercase}} Details</h3>
+    <div><span>id: </span>{{workout.id}}</div>
+    <div>
+        <label for="workout-name">Workout name: </label>
+        <input id="workout-name" [(ngModel)]="workout.name" placeholder="name">
+    </div>
+    <div *ngIf="workout && !workout.global">
+        <label for="workout-exercise-order">Exercise order: </label>
+        <input id="workout-exercise-order" [(ngModel)]="workout.exercise_order" placeholder="exercise order">
+    </div>
+    <div>
+        <label for="workout_rating">Workout rating: </label>
+        <input id="workout_rating" [(ngModel)]="workout.rating" placeholder="rating">
+    </div>
+
+    <div>
+        <span>Workout Exercises</span>
+        <ul>
+            <li *ngFor="let exercise of workout.exercises">
+                <a routerLink="/exercise_detail/{{exercise.exercise.id}}">
+                    <label class="exercise_elem">Exercise: {{exercise.exercise.id}}</label><span>{{exercise.exercise.name}} {{exercise.exercise.bodypart.name}} {{exercise.exercise.equipment.name}} </span>
+                </a>
+                <label>Sets: </label><input id="exercise_sets" [(ngModel)]="exercise.sets" placeholder="sets">
+                <button *ngIf="!workout.global" class="delete" title="delete exercise"
+                (click)="delete(exercise)">x</button>
+
+            </li>
+        </ul>
+    </div>-->
+</div>
+
+<!--<button *ngIf="!add_exercises && workout && !workout.global" (click)="display_exercises()">Display exercises to add</button>
+<button *ngIf="add_exercises && workout && !workout.global" (click)="display_exercises()">Hide exercises</button>
+<button *ngIf="workout && !workout.global" (click)="save()">save</button>
+<button *ngIf="workout && !workout.global" (click)="duplicate()">duplicate</button>
+<button *ngIf="workout && workout.global" (click)="duplicate()">copy to edit</button>
+<button (click)="goBack()">go back</button>-->
+

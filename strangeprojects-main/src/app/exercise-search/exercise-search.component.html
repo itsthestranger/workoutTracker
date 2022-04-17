@@ -1,0 +1,30 @@
+
+<div id="search-component">
+  <label for="search-box">Exercise Search</label>
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+
+  <div class="exercises">
+    <div class="exercise_container" *ngFor="let exercise of exercises$ | async" >
+      <div class="exercise_image">
+        <div>
+            <!--SHOULD BE IMG-->
+        </div>
+        <!--<img src="" alt="">-->
+      </div>
+      <a routerLink="/exercise_detail/{{exercise.id}}">
+          <div class="exercise_info_container">
+              <div class="exercise_top">
+                  <div class="exercise_name">
+                      {{exercise.name}}
+                  </div>
+                  <!--<a *ngIf="!exercise.global" class="delete-button" title="delete exercise"
+              (click)="delete(exercise)"><span>X</span></a>-->
+              </div>
+              <div class="exercise_bottom">
+                  {{exercise.equipment.name}} - {{exercise.bodypart.name}}
+              </div>
+          </div>
+      </a>
+    </div>
+  </div>
+</div>

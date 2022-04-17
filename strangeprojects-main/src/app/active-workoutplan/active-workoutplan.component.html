@@ -1,0 +1,213 @@
+
+<div *ngIf="display_tracker && tracker_display" class="wrapper" >
+    <div  class="workout_tracker_container">
+        <div class="workout_tracker_head">
+            <div class="workout_tracker_header"><h3>{{tracker_display.workout.name}} - Tracker</h3></div>
+            <div class="workoutplan_day_tracker_info">
+                <div class="workoutplan_day_tracker_info_elem">
+                    <span >Start Time:</span>
+                    <div>{{tracker_display.start}}</div>
+                </div>
+                <div class="workoutplan_day_tracker_info_elem">
+                    <span >End Time:</span>
+                    <div>{{tracker_display.end}}</div>
+                </div>
+                <div class="workoutplan_day_tracker_info_elem">
+                    <span >Duration:</span>
+                    <div>{{calcDuration(tracker_display.start,tracker_display.end)}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="workout_tracker_exercises">
+            <div class="workout_tracker_exercise" *ngFor="let exercise of getTrackerExercises(tracker_display)">
+                <span>{{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                <div class="workout_tracker_exercise_sets" *ngFor="let set of exercise.exercise_sets; let i = index">
+                    <span>Set {{i + 1}}: {{set.reps}} x {{set.weight}} {{exercise.exercise.tracking_unit.name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="workoutplan_day_btns">
+            <a class="close-button" (click)="showTracker(tracker_display);">
+                Close
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+<div *ngIf="!workoutplan_tracker">
+    <h3>No Active Workoutplan.</h3>
+    <div class="active_workoutplan_btn">
+        <a style="margin-top: 0;" routerLink="/workoutplans">Go To Workoutplans</a>
+    </div>
+</div>
+
+<div *ngIf="todaysWorkout && workoutplan_tracker" >
+    <div class="active_workoutplan_btn">
+        <a routerLink="/active_workoutplan">
+            Active Workoutplan Overview
+        </a>
+    </div>
+    
+    <div class="workoutplan_day_container">
+        <div class="workoutplan_day" *ngIf="!todaysWorkout.tracker">
+            <div class="workoutplan_day_header">
+                <a *ngIf="asWorkout(todaysWorkout.workout).id !== 1" routerLink="/workout_detail/{{asWorkout(todaysWorkout.workout).id}}">
+                    Today - {{asWorkout(todaysWorkout.workout).name}}
+                </a>
+                <div *ngIf="asWorkout(todaysWorkout.workout).id === 1">
+                    Today - {{asWorkout(todaysWorkout.workout).name}}
+                </div>
+            </div>
+            
+            <div  *ngIf="asWorkout(todaysWorkout.workout).id !== 1" class="workoutplan_day_body">
+                <div class="workoutplan_day_exercises_container">
+                    <div style="font-weight: bolder;">Exercises:</div>
+                    <div class="workoutplan_day_exercises">
+                        <div *ngFor="let exercise of asWorkout(todaysWorkout.workout).exercises">
+                            
+                            <span>{{exercise.sets}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div *ngIf="asWorkout(todaysWorkout.workout).id === 1" class="workoutplan_day_body" style="justify-content: center;">
+                <div class="workoutplan_day_exercises_container" >
+                    <h4>Enjoy your Rest Day.</h4>
+                </div>
+            </div>
+            <div class="workoutplan_day_btns">
+                <a *ngIf="asWorkout(todaysWorkout.workout).id !== 1" (click)="trackWorkout(asWorkout(todaysWorkout.workout).id, workoutplan_tracker.workoutplan.id, todaysWorkout.deload)" >
+                    Track Workout
+                </a>
+            </div>
+        </div>
+
+        <div class="workoutplan_day" *ngIf="todaysWorkout.tracker">
+            <div class="workoutplan_day_header">
+                <a *ngIf="asWorkoutTracker(todaysWorkout.workout).workout.id !== 1" routerLink="/workout_detail/{{asWorkoutTracker(todaysWorkout.workout).workout.id}}">
+                    Today - {{asWorkoutTracker(todaysWorkout.workout).workout.name}}
+                </a>
+                <div *ngIf="asWorkoutTracker(todaysWorkout.workout).workout.id === 1">
+                    Today - {{asWorkoutTracker(todaysWorkout.workout).workout.name}}
+                </div>
+            </div>
+            
+            <div  *ngIf="asWorkout(todaysWorkout.workout).id !== 1" class="workoutplan_day_body">
+                <!---->
+                <div class="workoutplan_day_exercises_container">
+                    <div style="font-weight: bolder;">Exercises:</div>
+                    <div class="workoutplan_day_exercises"> 
+                        <div *ngFor="let exercise of getTrackerExercises(asWorkoutTracker(todaysWorkout.workout))">
+                            <span>{{exercise.exercise_sets.length}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+            <div class="workoutplan_day_btns">
+                <a (click)="showTracker(asWorkoutTracker(todaysWorkout.workout))">
+                    Show Tracker
+                </a>
+            </div>
+
+        </div>
+
+        <div class="workoutplan_day" *ngIf="tomorrowsWorkout" style="background-color: lightgrey;">
+            <div class="workoutplan_day_header">
+                <a *ngIf="asWorkout(tomorrowsWorkout.workout).id !== 1" routerLink="/workout_detail/{{asWorkout(tomorrowsWorkout.workout).id}}">
+                    Tomorrow - {{asWorkout(tomorrowsWorkout.workout).name}}
+                </a>
+                <div *ngIf="asWorkout(tomorrowsWorkout.workout).id === 1">
+                    Tomorrow - {{asWorkout(tomorrowsWorkout.workout).name}}
+                </div>
+            </div>
+            <div  *ngIf="asWorkout(tomorrowsWorkout.workout).id !== 1" class="workoutplan_day_body">
+                <div class="workoutplan_day_exercises_container">
+                    <div style="font-weight: bolder;">Exercises:</div>
+                    <div class="workoutplan_day_exercises">
+                        <div *ngFor="let exercise of asWorkout(tomorrowsWorkout.workout).exercises">
+                            
+                            <span>{{exercise.sets}} x {{exercise.exercise.name}} - {{exercise.exercise.equipment.name}} </span>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div *ngIf="asWorkout(tomorrowsWorkout.workout).id === 1" class="workoutplan_day_body" style="justify-content: center;">
+                <div class="workoutplan_day_exercises_container" >
+                    <h4>Enjoy your Rest Day.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div *ngIf="!todaysWorkout.tracker">
+        <div>
+            <h3>Today's Workout: {{asWorkout(todaysWorkout.workout).name}}</h3>
+            
+        </div>
+        
+        <div *ngIf="todaysWorkout.workout.id !== 1">
+            <div>Exercise Order: {{asWorkout(todaysWorkout.workout).exercise_order}}</div>
+            <div>Rating: {{asWorkout(todaysWorkout.workout).rating}}</div>
+            <div *ngFor="let exercise of asWorkout(todaysWorkout.workout).exercises;" style="display: flex;">
+                <div>Exercise Name: {{exercise.exercise.name}}</div>
+                <div>Bodypart: {{exercise.exercise.bodypart.name}}</div>
+                <div>Equipment: {{exercise.exercise.equipment.name}}</div>
+                <div>Sets: {{exercise.sets}}</div>
+                <div>Rating: {{exercise.exercise.rating}}</div>
+                <div>Note: {{exercise.exercise.note}}</div>
+            </div>
+        </div>
+        <a *ngIf="todaysWorkout.workout.id !== 1" routerLink="/workout_tracker/{{asWorkout(todaysWorkout.workout).id}}/{{workoutplan_tracker.workoutplan.id}}">
+            <button>track workout</button>
+        </a>
+    </div>
+    
+    <div *ngIf="todaysWorkout.tracker">
+        <div>
+            <h3>Today's Workout: {{asWorkoutTracker(todaysWorkout.workout).workout.name}} - FINISHED</h3>
+            
+        </div>
+        
+        <div>
+            <div>Start Time: {{asWorkoutTracker(todaysWorkout.workout).start}}</div>
+            <div>End Time: {{asWorkoutTracker(todaysWorkout.workout).end}}</div>
+            <div *ngFor="let set of asWorkoutTracker(todaysWorkout.workout).tracker_sets;" style="display: flex;">
+                <div>Exercise Id: {{set.exercise_id}}</div>
+                <div>Reps: {{set.reps}}</div>
+                <div>Weight: {{set.weight}}</div>
+                <div>Feeling: {{set.feeling}}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="tomorrowsWorkout" style="background-color: lightgrey;" >
+        <div>
+            <h3>Tomorrows's Workout: {{asWorkout(tomorrowsWorkout.workout).name}}</h3>
+            
+        </div>
+        <div *ngIf="tomorrowsWorkout.workout.id !== 1">
+            <div>Exercise Order: {{asWorkout(tomorrowsWorkout.workout).exercise_order}}</div>
+            <div>Rating: {{asWorkout(tomorrowsWorkout.workout).rating}}</div>
+            <h5>Exercises:</h5>
+            <div *ngFor="let exercise of asWorkout(tomorrowsWorkout.workout).exercises" style="display: flex;">
+                <div>Name: {{exercise.exercise.name}}</div>
+                <div>Bodypart: {{exercise.exercise.bodypart.name}}</div>
+                <div>Equipment: {{exercise.exercise.equipment.name}}</div>
+                <div>Sets: {{exercise.sets}}</div>
+            </div>
+        </div>
+    </div>-->
+     
+</div>
+
+

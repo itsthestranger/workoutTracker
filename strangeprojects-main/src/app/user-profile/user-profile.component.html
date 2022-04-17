@@ -1,0 +1,57 @@
+<div *ngIf="user">
+    <div class="user_profile">
+        <div class="user_profile_head">
+            <div>
+                <img src="{{user.profile_picture_path}}" alt="" style="border:1px solid lightgrey;border-radius: 100%;">
+            </div>
+            <div class="user_profile_head_username">
+                <div>{{user.username}}</div>
+            </div>
+        </div>
+        <div class="user_profile_body">
+            <div class="user_profile_elem">
+                <div ><span>Username:</span></div>
+                <input *ngIf="user.own_profile && editing" id="user-name" [(ngModel)]="user.username" placeholder="username">
+                <div *ngIf="!user.own_profile || (user.own_profile && !editing)" ><span>{{user.username}}</span></div>
+            </div>
+            <div  class="user_profile_elem">
+                <div ><span>Email:</span> </div>
+                <input *ngIf="user.own_profile && editing" id="user-email" [(ngModel)]="user.email" placeholder="email">
+                <div *ngIf="!user.own_profile || (user.own_profile && !editing)" ><span>{{user.email}}</span></div>
+            </div>
+            <div class="user_profile_elem">
+                <div ><span>First name:</span> </div>
+                <input *ngIf="user.own_profile && editing"  id="user-first_name" [(ngModel)]="user.first_name" placeholder="first name">
+                <div *ngIf="!user.own_profile || (user.own_profile && !editing)"><span>{{user.first_name}}</span></div>
+            </div>
+            <div class="user_profile_elem">
+                <div ><span>Last name:</span> </div>
+                <input *ngIf="user.own_profile && editing"  id="user-last_name" [(ngModel)]="user.last_name" placeholder="last name">
+                <div *ngIf="!user.own_profile || (user.own_profile && !editing)"><span>{{user.last_name}}</span></div>
+            </div>
+            <div *ngIf="user.own_profile && editing" class="upload_file user_profile_elem">
+                <input type="file" id="file" (change)="handleFileInput($event)">
+                <a (click)="uploadImage()">Upload</a>
+            </div>
+            <div class="user_profile_btns">
+                <a *ngIf="user.own_profile && editing" (click)="updateProfile()">Update Profile</a>
+                <a *ngIf="user.own_profile" (click)="changePassword()">Change Password</a>
+                <a *ngIf="user.own_profile && !editing" (click)="toggleEditing()">Edit</a>
+                <a *ngIf="user.own_profile && editing" (click)="toggleEditing()">Cancel</a>
+                <a *ngIf="!user.own_profile && user.following" (click)="toggleFollow()">Unfollow</a>
+                <a *ngIf="!user.own_profile && !user.following" (click)="toggleFollow()">Follow</a>
+                <a (click)="goBack()">Go Back</a>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <div *ngIf="!user.own_profile && user.following">
+        <!--
+            DISPLAY other users public Workouts and Exercises if I follow him
+            -> possibility to add Workout/Exercises to my own Workouts/Exercises -> copy them
+        -->
+    </div>
+
+</div>

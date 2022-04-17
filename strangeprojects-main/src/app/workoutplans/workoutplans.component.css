@@ -1,0 +1,201 @@
+h3{
+  margin:0;
+  padding:0;
+  padding-bottom: .5rem;
+}
+input{
+  padding:.5rem;
+}
+select{
+  padding:.5rem;
+}
+
+.wrapper{
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  vertical-align: middle;
+  background-color: rgb(211, 211, 211,0.5);
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+.create_workoutplan{
+  display: block;
+  margin:auto;
+  z-index: 200;
+  background-color: white;
+  border: 1px solid #005DAE;
+  border-radius: 4px;
+  padding:1rem;
+}
+
+.create_workoutplan_head{
+  text-align: center;
+}
+.create_workoutplan_head>h3{
+  margin:0 0 1rem 0;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.create_workoutplan_body{
+  min-width: 320px;
+}
+
+.create_workoutplan_elem{
+    display: flex;
+    margin-bottom: .5rem;
+}
+.create_workoutplan_elem>div{
+  display: flex;
+}
+.create_workoutplan_elem>div>span{
+  margin:auto 0;
+}
+.create_workoutplan_elem>input{
+  margin-left: auto;
+}
+.create_workoutplan_elem>select{
+  margin-left: auto;
+}
+
+.create_workoutplan_btns{
+  display: flex;
+  justify-content: center;
+}
+
+.create_workoutplan_btns>a{
+  margin: .5rem .5rem 0 .5rem;
+  padding: .5rem;
+  background-color: #005DAE;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: small;
+}
+
+.create_workoutplan_btns>a:hover{
+  background-color: #00284b;
+}
+
+
+
+
+.toggle_btn{
+  margin: .5rem .5rem 0 .5rem;
+  padding: .5rem;
+  background-color: #005DAE;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: small;
+}
+
+.toggle_btn:hover{
+  background-color: #00284b;
+}
+
+.workoutplan_container{
+  display: block;
+  margin: 0 0 1rem 0;
+  background-color: white;
+  border: 1px solid #005DAE;
+  border-radius: 4px;
+  padding:1rem;
+  
+}
+.workoutplan_head{
+  text-align: center;
+  border-bottom: 1px solid lightgray;
+  margin-bottom:.5rem;
+}
+.workoutplan_info{
+  margin-bottom: .5rem;
+}
+.workoutplan_info_elem{
+  margin:.5rem;
+}
+.workoutplan_btns{
+  display: flex;
+}
+.workoutplan_btns>a{
+  padding: .5rem;
+  margin: .5rem;
+  background-color: #005DAE;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: small;
+}
+.workoutplan_btns>a:hover{
+  background-color: #00284b;
+}
+.workoutplan_body{
+  border:1px solid lightgray;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 400px;
+  padding:1rem;
+}
+.workoutplan_week_container{
+  margin-bottom: 1rem;
+  border-bottom: 1px solid lightgray;
+}
+.workoutplan_week_head{
+display: flex;
+}
+.workoutplan_week_head div, a{
+padding-bottom: .5rem;
+margin:auto 0;
+margin-left: 1rem;
+}
+.workoutplan_week{
+  display: flex;  
+  flex-wrap: wrap;
+}
+.workoutplan_day{
+  border: 1px solid #005DAE;
+  border-radius: 4px;
+  padding:.5rem;
+  margin: 0 1rem 1rem 0;
+  min-width: 210px;
+}
+.workoutplan_day_header{
+  text-align: center;
+  padding-bottom: .25rem;
+  margin-bottom: .5rem;
+  border-bottom: 1px solid lightgray;
+}
+.workoutplan_day_header a{
+text-decoration: none;
+color:#333;
+}
+.workoutplan_day_body{
+  font-size: smaller;
+}
+.workoutplan_rest_day{
+  font-size: smaller;
+  display: flex;
+  justify-content: center;
+
+}
+
+.workoutplan_day_body>div{
+  margin-top:.5rem;
+}
+.workoutplan_day_exercises{
+  padding:.5rem;
+  color:grey;
+}
+.workoutplan_day_exercises>div{
+  margin-bottom: .25rem;
+}
